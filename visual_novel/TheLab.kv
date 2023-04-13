@@ -1,0 +1,86 @@
+#: import FadeTransition kivy.uix.screenmanager.FadeTransition
+
+<MyScreenManager>:
+    transition: FadeTransition()
+    MenuScreen:
+    DialogueScreen:
+    EndScreen:
+
+<MenuScreen>:
+    name: "menu"
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'menu_background.jpg'
+        RelativeLayout:
+            Button:
+                on_press: root.manager.current = 'dialogue'
+                size_hint: .5, .3
+                pos_hint: {'x': .25, 'y': .5}
+                text: "Start"
+                color: 0, 0, 0
+                background_color: 0, 0, 1, .3
+                font_size: "40dp"
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: 1, .25
+            Label:
+                color: 0, 0, 0
+                size_hint: 1, .1
+                text: "Text Size"
+                font_size: root.manager.FONT_SIZE
+            Slider:
+                size_hint: .5, .1
+                pos_hint: {'x': .25}
+                id: my_slider
+                min: 10
+                max: 30
+                value: 20
+                on_value: root.manager.FONT_SIZE = str(int(self.value)) + 'dp'
+        Widget:
+            size_hint: 1, .5
+
+
+<MenuContent@BoxLayout>:
+
+<DialogueScreen>:
+    name: "dialogue"
+    BoxLayout:
+        orientation: "vertical"
+        canvas.before:
+            Rectangle:
+                pos: self.pos
+                size: self.size
+                source: 'dialogue_background.jpg'
+        Widget:
+            size_hint: 1, 4
+        Label:
+            canvas.before:
+                Color: 
+                    rgba: 0, 0, 0, 0.7
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: 0.4, 0.2
+            text: "Ульяна"
+            font_size: root.manager.FONT_SIZE
+        Label:
+            canvas.before:
+                Color: 
+                    rgba: 0, 0, 0, 0.65
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            size_hint: 1, 1
+            text: "Talking..."
+            font_size: root.manager.FONT_SIZE
+
+
+<EndScreen>:
+    name: "end"
+    Label:
+        text: "The End"
+        font_size: "100dp"
